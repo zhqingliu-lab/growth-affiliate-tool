@@ -32,7 +32,7 @@ Q1: What runtime are you running inside?
 │
 ├── OpenClaw  ← OAuth NOT handled natively
 │       → docs/install/openclaw.md
-│         (which delegates to: github.com/zhqingliu-lab/openclaw-affiliate-skill)
+│         (uses bundled skill at: skills/openclaw-affiliate-mcp/)
 │
 └── Other MCP-compliant client with native OAuth
         → docs/install/generic.md

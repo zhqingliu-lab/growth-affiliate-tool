@@ -5,37 +5,47 @@
 OpenClaw needs a slightly different install path because its built-in MCP runtime does **not**
 yet handle two of OKX's OAuth quirks:
 
-1. The **mandatory `resource` parameter** on every authorize and token request.
+1. The **mandatory `resource` parameter** ([RFC 8707](https://datatracker.ietf.org/doc/html/rfc8707))
+   on every authorize and token request.
 2. The **non-discovery DCR (Dynamic Client Registration) endpoint** at
    `/api/v5/mcp/auth/register`.
 
 Most other MCP clients (Claude Code, Codex, Hermes, Cursor) handle these natively. Until
-OpenClaw upstream catches up, OpenClaw users install via a dedicated skill that performs the
-OAuth flow with a few small Python scripts.
+OpenClaw upstream catches up, OpenClaw users install via the **bundled skill** in this repo
+at [`skills/openclaw-affiliate-mcp/`](../../skills/openclaw-affiliate-mcp/) — a few small
+Python scripts plus an agent-readable decision tree.
 
-## The skill
+## What the skill provides
 
-→ **[github.com/zhqingliu-lab/openclaw-affiliate-skill](https://github.com/zhqingliu-lab/openclaw-affiliate-skill)**
-
-It provides:
-
-- `SKILL.md` — agent-readable decision tree
-- `scripts/register.py` — DCR (one-time per install)
-- `scripts/auth.py` — build authorize URL + PKCE
-- `scripts/exchange.py` — exchange code for tokens
-- `scripts/refresh.py` — refresh access token (run before 1 h expiry)
-- `reference/` — endpoint specs, known issues, callback page tips
+- [`SKILL.md`](../../skills/openclaw-affiliate-mcp/SKILL.md) — agent-readable decision tree
+- [`scripts/register.py`](../../skills/openclaw-affiliate-mcp/scripts/register.py) — DCR (one-time per install)
+- [`scripts/auth.py`](../../skills/openclaw-affiliate-mcp/scripts/auth.py) — build authorize URL + PKCE
+- [`scripts/exchange.py`](../../skills/openclaw-affiliate-mcp/scripts/exchange.py) — exchange code for tokens
+- [`scripts/refresh.py`](../../skills/openclaw-affiliate-mcp/scripts/refresh.py) — refresh access token (run before 1 h expiry)
+- [`reference/`](../../skills/openclaw-affiliate-mcp/reference/) — endpoint specs, known issues, callback page tips
 
 All scripts are stdlib-only — no `pip install` required.
 
 ## Install
 
+### Option A — full repo clone (simplest)
+
 ```bash
-git clone https://github.com/zhqingliu-lab/openclaw-affiliate-skill \
-  ~/.openclaw/workspace/skills/okx-affiliate-mcp
+git clone https://github.com/zhqingliu-lab/growth-affiliate-tool /tmp/growth-affiliate-tool
+cp -r /tmp/growth-affiliate-tool/skills/openclaw-affiliate-mcp \
+      ~/.openclaw/workspace/skills/okx-affiliate-mcp
 ```
 
-Then ask your OpenClaw agent:
+### Option B — sparse checkout (only the skill)
+
+```bash
+git clone --filter=blob:none --sparse \
+  https://github.com/zhqingliu-lab/growth-affiliate-tool /tmp/growth-affiliate-tool
+cd /tmp/growth-affiliate-tool && git sparse-checkout set skills/openclaw-affiliate-mcp
+cp -r skills/openclaw-affiliate-mcp ~/.openclaw/workspace/skills/okx-affiliate-mcp
+```
+
+Either way, ask your OpenClaw agent:
 
 > *Install the OKX Affiliate MCP.*
 
@@ -54,7 +64,8 @@ The skill produces a regular OKX OAuth URL. After you click *Authorize* on OKX:
 
 Full instructions for handling the callback page (and what to tell users who panic about the
 blank page) live in
-[`openclaw-affiliate-skill/SKILL.md`](https://github.com/zhqingliu-lab/openclaw-affiliate-skill/blob/main/SKILL.md).
+[`skills/openclaw-affiliate-mcp/SKILL.md`](../../skills/openclaw-affiliate-mcp/SKILL.md) and
+[`skills/openclaw-affiliate-mcp/reference/blank-callback-page.md`](../../skills/openclaw-affiliate-mcp/reference/blank-callback-page.md).
 
 ## Token lifecycle
 
@@ -71,7 +82,7 @@ decision tree handles this automatically.
 
 Once `token.json` is populated, point OpenClaw at the MCP endpoint with the bearer token from
 the file. See
-[`openclaw-affiliate-skill/reference/openclaw-config.md`](https://github.com/zhqingliu-lab/openclaw-affiliate-skill/blob/main/reference/openclaw-config.md)
+[`skills/openclaw-affiliate-mcp/reference/openclaw-config.md`](../../skills/openclaw-affiliate-mcp/reference/openclaw-config.md)
 for the current recommended wiring.
 
 ## When OpenClaw upstream supports custom OAuth
@@ -91,4 +102,4 @@ when that happens.
 | MCP calls return 401 even right after token refresh  | Restart your OpenClaw session so it picks up new headers |
 
 For deeper debugging see
-[`openclaw-affiliate-skill/reference/known-issues.md`](https://github.com/zhqingliu-lab/openclaw-affiliate-skill/blob/main/reference/known-issues.md).
+[`skills/openclaw-affiliate-mcp/reference/known-issues.md`](../../skills/openclaw-affiliate-mcp/reference/known-issues.md).

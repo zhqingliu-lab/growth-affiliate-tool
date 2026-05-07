@@ -37,9 +37,9 @@ Pick the row that matches your client. Each guide is a single command plus a 4-s
 
 > **OpenClaw note:** OpenClaw's built-in MCP runtime does not yet handle OKX's non-standard
 > OAuth requirements (mandatory `resource` parameter and a non-discovery DCR endpoint). Until
-> upstream support lands, OpenClaw users install via the
-> [`openclaw-affiliate-skill`](https://github.com/zhqingliu-lab/openclaw-affiliate-skill) — a
-> drop-in skill pack that walks the agent through the OAuth flow.
+> upstream support lands, OpenClaw users install via the bundled skill at
+> [`skills/openclaw-affiliate-mcp/`](skills/openclaw-affiliate-mcp/) — a drop-in skill pack
+> that walks the agent through the OAuth flow.
 
 ## Authorization scopes
 
@@ -78,6 +78,7 @@ Full parameters and return fields → [`docs/tools-reference.md`](docs/tools-ref
 | [`periodType` quick reference](docs/period-type.md)            | The eight time-window codes used across most tools           |
 | [FAQ](docs/faq.md)                                             | Token expiry, 400 errors, scope mismatches, common pitfalls  |
 | [Agent install bootstrap](INSTALL.md)                          | Decision tree an AI agent can read end-to-end                |
+| [Skills index](skills/README.md)                               | Skills for runtimes that need custom OAuth handling          |
 
 ## Prerequisites
 

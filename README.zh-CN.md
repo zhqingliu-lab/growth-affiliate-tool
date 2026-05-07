@@ -4,91 +4,92 @@
 
 [English](README.md) | [中文](README.zh-CN.md)
 
-一個遠端 MCP（Model Context Protocol）端點，讓 AI agent 能用自然語言查詢 OKX Affiliate 後台
-的業績、邀請人、邀請鏈接、子聯盟等數據，無需手動拼 API。
+一个远端 MCP（Model Context Protocol）端点，让 AI agent 能用自然语言查询 OKX Affiliate 后台
+的业绩、邀请人、邀请链接、子联盟等数据，无需手动拼 API。
 
-> **端點：** `https://www.okx.com/api/v1/mcp/growth-affiliate-mcp`
-> **傳輸：** Streamable HTTP
-> **認證：** OAuth 2.0（每個用戶獨立授權，由 OKX 託管）
+> **端点：** `https://www.okx.com/api/v1/mcp/growth-affiliate-mcp`
+> **传输：** Streamable HTTP
+> **认证：** OAuth 2.0（每个用户独立授权，由 OKX 托管）
 
-## 接入後可以做什麼
+## 接入后可以做什么
 
-直接問你的 agent：
-- *「看下我近 30 天的 affiliate 業績」*
-- *「本季度佣金前 10 的邀請人是誰？」*
-- *「列出我所有邀請鏈接，按交易者數排序」*
-- *「子聯盟 `XYZ` 本月表現如何？」*
+直接问你的 agent：
+- *「看下我近 30 天的 affiliate 业绩」*
+- *「本季度佣金前 10 的邀请人是谁？」*
+- *「列出我所有邀请链接，按交易者数排序」*
+- *「子联盟 `XYZ` 本月表现如何？」*
 
-Agent 自動選工具、執行、用人話回答。
+Agent 自动选工具、执行、用人话回答。
 
-## 快速開始
+## 快速开始
 
-對應你的客戶端，按下面表格找到安裝指南。每個指南都是一條命令加 4 步 OAuth 流程。
+对应你的客户端，按下面表格找到安装指南。每个指南都是一条命令加 4 步 OAuth 流程。
 
-| 客戶端                          | 原生 MCP OAuth | 安裝指南                                                     |
+| 客户端                          | 原生 MCP OAuth | 安装指南                                                     |
 | ------------------------------- | :------------: | ------------------------------------------------------------ |
 | **Claude Code**（CLI）          | ✅             | [`docs/install/claude-code.md`](docs/install/claude-code.md) |
 | **Codex CLI**                   | ✅             | [`docs/install/codex.md`](docs/install/codex.md)             |
 | **Hermes**                      | ✅             | [`docs/install/hermes.md`](docs/install/hermes.md)           |
 | **Cursor**                      | ✅             | [`docs/install/cursor.md`](docs/install/cursor.md)           |
-| **通用 MCP 客戶端**             | ✅             | [`docs/install/generic.md`](docs/install/generic.md)         |
+| **通用 MCP 客户端**             | ✅             | [`docs/install/generic.md`](docs/install/generic.md)         |
 | **OpenClaw**                    | ❌（用 skill） | [`docs/install/openclaw.md`](docs/install/openclaw.md)       |
 
-> **OpenClaw 用戶請注意：** OpenClaw 內建的 MCP runtime 還不支援 OKX 的非標準 OAuth（必填
-> `resource` 參數 + 非 discovery 的 DCR 端點）。在上游支援之前，OpenClaw 用戶通過
-> [`openclaw-affiliate-skill`](https://github.com/zhqingliu-lab/openclaw-affiliate-skill) 安裝
-> ——這是一個專門引導 agent 完成 OAuth 流程的 skill pack。
+> **OpenClaw 用户请注意：** OpenClaw 内建的 MCP runtime 还不支持 OKX 的非标准 OAuth（必填
+> `resource` 参数 + 非 discovery 的 DCR 端点）。在上游支持之前，OpenClaw 用户通过本仓库自带
+> 的 skill 安装：[`skills/openclaw-affiliate-mcp/`](skills/openclaw-affiliate-mcp/) —— 一个
+> 专门引导 agent 完成 OAuth 流程的 skill pack。
 
-## 授權範圍
+## 授权范围
 
-連接時 OKX 會問你授予哪些權限。**這個 MCP 只需要讀權限**，所以推薦默認只勾選
+连接时 OKX 会问你授予哪些权限。**这个 MCP 只需要读权限**，所以推荐默认只勾选
 **Live Trading → Read-only**：
 
-| Scope                 | 推薦 | 用途                                                  |
+| Scope                 | 推荐 | 用途                                                  |
 | --------------------- | :--: | ----------------------------------------------------- |
-| `live:read`           | ✅   | 下面所有讀取工具（業績/邀請人/鏈接/子聯盟）           |
-| `live:trade`          | ❌   | 下單/改單/撤單 —— 本 MCP 不用                         |
-| `live:earn`           | ❌   | Earn 申購 —— 本 MCP 不用                              |
-| `live:asset_transfer` | ❌   | 資金劃轉 —— 本 MCP 不用                               |
-| `demo:*`              | ❌   | 模擬盤 —— 本 MCP 不用                                 |
+| `live:read`           | ✅   | 下面所有读取工具（业绩/邀请人/链接/子联盟）           |
+| `live:trade`          | ❌   | 下单/改单/撤单 —— 本 MCP 不用                         |
+| `live:earn`           | ❌   | Earn 申购 —— 本 MCP 不用                              |
+| `live:asset_transfer` | ❌   | 资金划转 —— 本 MCP 不用                               |
+| `demo:*`              | ❌   | 模拟盘 —— 本 MCP 不用                                 |
 
-之後想加 scope 重新跑 `/mcp`（或你 agent 的等效命令）即可。
+之后想加 scope 重新跑 `/mcp`（或你 agent 的等效命令）即可。
 
-## 工具一覽
+## 工具一览
 
 | #  | 工具名                              | 用途                                              |
 | -- | ----------------------------------- | ------------------------------------------------- |
-| 1  | `affiliate-pro-performance-summary` | 聚合業績指標——邀請人/入金/交易量/佣金，按現貨/合約/BSC 拆分 |
-| 2  | `affiliate-pro-invitee-list`        | 邀請人分頁列表，含入金、交易、KYC                  |
-| 3  | `affiliate-pro-invitee-detail`      | 按 UID 查單個邀請人詳情                            |
-| 4  | `affiliate-pro-link-list`           | 邀請鏈接 + 佣金比例 + 累計數據                     |
-| 5  | `affiliate-pro-sub-affiliate-list`  | MLRS 網絡中的子聯盟                                |
-| 6  | `affiliate-pro-co-inviter-list`     | 你被列為共同邀請人的渠道                           |
+| 1  | `affiliate-pro-performance-summary` | 聚合业绩指标——邀请人/入金/交易量/佣金，按现货/合约/BSC 拆分 |
+| 2  | `affiliate-pro-invitee-list`        | 邀请人分页列表，含入金、交易、KYC                  |
+| 3  | `affiliate-pro-invitee-detail`      | 按 UID 查单个邀请人详情                            |
+| 4  | `affiliate-pro-link-list`           | 邀请链接 + 佣金比例 + 累计数据                     |
+| 5  | `affiliate-pro-sub-affiliate-list`  | MLRS 网络中的子联盟                                |
+| 6  | `affiliate-pro-co-inviter-list`     | 你被列为共同邀请人的渠道                           |
 
-完整參數和返回字段 → [`docs/tools-reference.md`](docs/tools-reference.md)。
+完整参数和返回字段 → [`docs/tools-reference.md`](docs/tools-reference.md)。
 
-## 文檔
+## 文档
 
-| 文檔                                                           | 內容                                                |
+| 文档                                                           | 内容                                                |
 | -------------------------------------------------------------- | --------------------------------------------------- |
-| [工具參考](docs/tools-reference.md)                            | 每個工具的所有參數和返回字段                        |
-| [使用示例](docs/usage-examples.md)                             | 自然語言提問範例                                    |
-| [`periodType` 速查表](docs/period-type.md)                     | 8 種時間窗口代碼                                    |
-| [FAQ](docs/faq.md)                                             | Token 過期、400 錯誤、scope 不匹配、常見坑          |
-| [Agent 安裝引導](INSTALL.md)                                   | 給 AI agent 端到端讀的決策樹                        |
+| [工具参考](docs/tools-reference.md)                            | 每个工具的所有参数和返回字段                        |
+| [使用示例](docs/usage-examples.md)                             | 自然语言提问示例                                    |
+| [`periodType` 速查表](docs/period-type.md)                     | 8 种时间窗口代码                                    |
+| [FAQ](docs/faq.md)                                             | Token 过期、400 错误、scope 不匹配、常见坑          |
+| [Agent 安装引导](INSTALL.md)                                   | 给 AI agent 端到端读的决策树                        |
+| [Skill 索引](skills/README.md)                                 | 给需要自定义 OAuth 处理的 runtime 用的 skill 列表    |
 
-## 前置條件
+## 前置条件
 
-- 一個已開通 **Affiliate** 的 OKX 帳號
-- 上面表格中的任一**客戶端**（或其他 MCP 兼容 agent）
-- 瀏覽器，用於完成一次性 OAuth 授權
+- 一个已开通 **Affiliate** 的 OKX 账号
+- 上面表格中的任一**客户端**（或其他 MCP 兼容 agent）
+- 浏览器，用于完成一次性 OAuth 授权
 
-僅此而已 —— 不需要安裝 SDK，也不需要本地起 server。MCP 由 OKX 託管。
+仅此而已 —— 不需要安装 SDK，也不需要本地起 server。MCP 由 OKX 托管。
 
-## 授權
+## 授权
 
 [MIT](LICENSE)
 
-## 聯絡
+## 联系
 
-問題或需求：請在本 repo 提 issue。
+问题或需求：请在本 repo 提 issue。
