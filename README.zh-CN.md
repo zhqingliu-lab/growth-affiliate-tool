@@ -56,14 +56,14 @@ Agent 自动选工具、执行、用人话回答。
 
 ## 工具一览
 
-| #  | 工具名                              | 用途                                              |
-| -- | ----------------------------------- | ------------------------------------------------- |
-| 1  | `affiliate-pro-performance-summary` | 聚合业绩指标——邀请人/入金/交易量/佣金，按现货/合约/BSC 拆分 |
-| 2  | `affiliate-pro-invitee-list`        | 邀请人分页列表，含入金、交易、KYC                  |
-| 3  | `affiliate-pro-invitee-detail`      | 按 UID 查单个邀请人详情                            |
-| 4  | `affiliate-pro-link-list`           | 邀请链接 + 佣金比例 + 累计数据                     |
-| 5  | `affiliate-pro-sub-affiliate-list`  | MLRS 网络中的子联盟                                |
-| 6  | `affiliate-pro-co-inviter-list`     | 你被列为共同邀请人的渠道                           |
+| #  | 工具名                                | 用途                                              |
+| -- | ------------------------------------- | ------------------------------------------------- |
+| 1  | `okx-affiliate-performance-summary`   | 聚合业绩指标——邀请人/入金/交易量/佣金，按现货/合约/BSC 拆分 |
+| 2  | `okx-affiliate-invitee-list`          | 邀请人分页列表，含入金、交易、KYC                  |
+| 3  | `okx-affiliate-invitee-detail`        | 按 UID 查单个邀请人详情                            |
+| 4  | `okx-affiliate-link-list`             | 邀请链接 + 佣金比例 + 累计数据（含 24 小时佣金）   |
+| 5  | `okx-affiliate-sub-affiliate-list`    | MLRS 网络中的子联盟（生涯数据）                    |
+| 6  | `okx-affiliate-co-inviter-list`       | 你被列为共同邀请人的渠道                           |
 
 完整参数和返回字段 → [`docs/tools-reference.md`](docs/tools-reference.md)。
 

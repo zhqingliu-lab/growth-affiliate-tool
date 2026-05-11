@@ -58,14 +58,14 @@ You can always re-run `/mcp` (or your agent's equivalent) to widen scopes later.
 
 ## Tools at a glance
 
-| #  | Tool                                | Purpose                                              |
-| -- | ----------------------------------- | ---------------------------------------------------- |
-| 1  | `affiliate-pro-performance-summary` | Aggregate metrics — invitees, deposits, volume, commission, broken down by Spot / Derivatives / BSC |
-| 2  | `affiliate-pro-invitee-list`        | Paginated invitee list with deposits, trading, KYC   |
-| 3  | `affiliate-pro-invitee-detail`      | Deep dive on a single invitee by external UID         |
-| 4  | `affiliate-pro-link-list`           | Your invite links + commission rates + cumulative stats |
-| 5  | `affiliate-pro-sub-affiliate-list`  | Sub-affiliates in your MLRS network                  |
-| 6  | `affiliate-pro-co-inviter-list`     | Channels where you are listed as a co-inviter        |
+| #  | Tool                                  | Purpose                                              |
+| -- | ------------------------------------- | ---------------------------------------------------- |
+| 1  | `okx-affiliate-performance-summary`   | Aggregate metrics — invitees, deposits, volume, commission, broken down by Spot / Derivatives / BSC |
+| 2  | `okx-affiliate-invitee-list`          | Paginated invitee list with deposits, trading, KYC   |
+| 3  | `okx-affiliate-invitee-detail`        | Deep dive on a single invitee by external UID         |
+| 4  | `okx-affiliate-link-list`             | Your invite links + commission rates + cumulative stats (incl. 24h commission) |
+| 5  | `okx-affiliate-sub-affiliate-list`    | Sub-affiliates in your MLRS network (lifetime data)  |
+| 6  | `okx-affiliate-co-inviter-list`       | Channels where you are listed as a co-inviter        |
 
 Full parameters and return fields → [`docs/tools-reference.md`](docs/tools-reference.md).
 

@@ -53,4 +53,4 @@ A non-empty response with commission and volume numbers means you are connected.
 ## Troubleshooting
 
 See the [FAQ](../faq.md). Most issues map 1:1 with Claude Code — wrong OKX account, expired
-tokens (~1 h lifetime), or `pageType=2` on the performance summary.
+tokens (~1 h lifetime), or `limit ≥ 99` on `okx-affiliate-invitee-list` (cap at `"95"`).

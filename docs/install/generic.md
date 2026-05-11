@@ -62,9 +62,9 @@ Ask your agent:
 
 > *Show me my affiliate performance.*
 
-A non-empty response with `commission`, `volume`, and `invitees` fields means you are good.
-If it is empty, double-check that the OKX account you authorized is the one enrolled as an
-Affiliate.
+A non-empty response with `depAmt`, `inviteeCnt`, and a `details[]` array (Spot / Derivative
+/ BSC breakdown) means you are good. If it is empty, double-check that the OKX account you
+authorized is the one enrolled as an Affiliate.
 
 ## Troubleshooting
 

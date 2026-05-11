@@ -59,7 +59,7 @@ Ask Codex:
 
 > *Show me my affiliate performance.*
 
-It should call `affiliate-pro-performance-summary` and return numbers.
+It should call `okx-affiliate-performance-summary` and return numbers.
 
 ## Troubleshooting
 

@@ -48,8 +48,8 @@ After registering the MCP via the client-specific command/file:
    - On the consent screen, **leave Live Trading → Read-only checked**, leave everything
      else **off**, then click *Authorize access*.
 3. **Wait** — the agent's terminal will show *Authentication successful*.
-4. **Verify** — call `affiliate-pro-performance-summary` with no arguments. A 200 with
-   commission and volume numbers means you are good.
+4. **Verify** — call `okx-affiliate-performance-summary` with no arguments. A 200 with
+   `data[0].details[].commission` and `vol` numbers means you are good.
 
 > ⚠️ Do **not** request `live:trade`, `live:earn`, or `live:asset_transfer` — this MCP only
 > needs read scope. Asking for write scopes is unnecessary and will alarm the user.
@@ -70,7 +70,8 @@ After registering the MCP via the client-specific command/file:
 | ------------------------------------------------------ | ------------------------------------------- | ------------------------------------------- |
 | `401 Unauthorized` after install                        | OAuth not yet completed                     | Run the client's MCP auth command           |
 | `401` after working previously                          | Access token expired (lifetime ≈ 1 h)        | Most clients refresh automatically — re-run the request, or trigger MCP reconnect |
-| `400 Bad Request` from `affiliate-pro-performance-summary` | `pageType=2` was passed                | Drop the `pageType` argument; default is `1` |
+| `500 system error` from `okx-affiliate-invitee-list`    | `limit` was ≥ 99 (server bug)               | Use `"limit": "95"` or smaller |
+| `okx-affiliate-link-list` filter ignored               | Invalid enum (typo, wrong case)             | Use lowercase exact values: `standard`/`co_inviter`, `normal`/`abnormal` |
 | `invalid_grant: resource does not match`               | Custom OAuth client missing `resource` param | Use a supported client (see Q1) — only OpenClaw is known to need the skill workaround |
 
 ## After install succeeds

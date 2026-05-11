@@ -29,45 +29,78 @@ Your MCP client is not adding the required `resource` parameter to OAuth request
 ([RFC 8707](https://datatracker.ietf.org/doc/html/rfc8707)).
 
 **Fix:** Use a client that handles this natively (Claude Code, Codex, Hermes, Cursor are all
-known to work). For OpenClaw, use the [skill workaround](install/openclaw.md).
+known to work). For OpenClaw, use the bundled [skill workaround](install/openclaw.md).
 
 ### Q: How do I revoke the OAuth grant?
 
-OKX → *Settings → Connected apps* → find `growth-affiliate-pro-tools` → *Revoke*. The
+OKX → *Settings → Connected apps* → find your MCP server entry → *Revoke*. The
 `access_token` and `refresh_token` will both stop working immediately.
 
 ---
 
 ## Tool errors
 
-### Q: `affiliate-pro-performance-summary` returns 400 Bad Request.
+### Q: I get a 500 `system error` from `okx-affiliate-invitee-list`.
 
-You probably passed `pageType=2`. The endpoint only supports `pageType=1` (the default).
+The endpoint returns 500 when `limit ≥ 99`, even though the schema says max is 100. Bug
+acknowledged; pending OKX-side fix.
 
-**Fix:** Drop the `pageType` argument entirely, or set it to `1`.
+**Fix:** Use `limit: "95"` or lower. For larger result sets, paginate.
 
-### Q: `affiliate-pro-invitee-list` errors with "page is required".
+### Q: I passed `linkType: "whatever"` and still got all results.
 
-`page` is the only required argument on this tool — even `page=1` must be set.
+`okx-affiliate-link-list` and `okx-affiliate-co-inviter-list` **silently accept invalid
+enum values** for `linkType` / `linkStatus` and return all rows. Case-sensitive too —
+`STANDARD` is not the same as `standard`.
 
-**Fix:** Always pass `{"page": 1, ...}` at minimum.
+**Fix:** Pass only the documented lowercase values: `standard` / `co_inviter`,
+`normal` / `abnormal`. After calling, sanity-check the returned `linkType` / `linkStatus`
+matches what you asked for.
 
-### Q: I get 429 Too Many Requests.
+### Q: The response doesn't have a `total` count. How do I paginate?
 
-You are hitting the per-account rate limit. Bursting more than ~10 requests per second to
-this MCP returns `code: 50011`.
+Correct — the response does not include a total or `hasNextPage` field.
 
-**Fix:** Space your calls (a 200-500ms delay between requests works for most workloads). If
-you are pulling a large multi-month trend, prefer fewer larger ranges over many small daily
-calls.
+**Fix:** Page through until you get an empty `data` array. Pseudo-code:
 
-### Q: A tool returns 200 but `data` is empty.
+```python
+page = 1
+all_rows = []
+while True:
+    r = call("okx-affiliate-invitee-list", {"page": str(page), "limit": "95", ...})
+    rows = r["data"]
+    if not rows:
+        break
+    all_rows.extend(rows)
+    page += 1
+```
 
-Two common causes:
+If you know you need only top N, set `limit` and call once. Avoid pulling more data than
+needed — rate limits are tight (~5 RPS).
 
-1. The connected affiliate genuinely has no data in the requested window (very young
-   affiliate, or a `periodType` that is too narrow).
-2. The OKX account is not enrolled as an Affiliate — see "empty data" Q above.
+### Q: 429 Too Many Requests.
+
+You are hitting the per-account rate limit. Bursting more than ~5 requests per second
+returns `code: 50011`.
+
+**Fix:** Space your calls (a 200–500 ms delay between requests works for most workloads).
+If you are pulling a large multi-month trend, prefer fewer larger ranges over many small
+daily calls.
+
+### Q: `okx-affiliate-invitee-detail` returns "The user isn't your invitee".
+
+Code `51621` is returned for both *"valid UID but not your invitee"* and *"malformed UID"*.
+The distinction is not exposed.
+
+**Fix:** Verify the UID via `okx-affiliate-invitee-list` first. If it does not appear in
+your list, this MCP cannot return data for it.
+
+### Q: `okx-affiliate-performance-summary` returns 400 on a custom date range.
+
+Most likely your `begin` / `end` timestamps are wrong.
+
+**Fix:** Confirm both are passed, both are **Unix milliseconds** (not seconds, not
+YYYY-MM-DD), and the year is correct. `1743465600000` is **2025**-04-01, not 2026-04-01.
 
 ---
 
@@ -91,18 +124,21 @@ live affiliate account.
 
 ### Q: Are the timestamps UTC?
 
-Yes. `relateTime`, `firstTimeTraded`, `kycVerifiedTime`, `lastUpdatedTime` are all Unix
-**milliseconds** in UTC.
+Yes. `joinTime`, `firstTradeTime`, `kycTime`, `uTime`, `cTime` are all Unix **milliseconds**
+in UTC.
 
 ### Q: Are the financial fields period-scoped or lifetime?
 
 It depends on the tool:
 
-- `affiliate-pro-performance-summary` — period-scoped (`periodType` chooses the window).
-- `affiliate-pro-invitee-list` — period-scoped per row (`deposited`, `fees`, `totalReward`,
-  `totalTradingVolume` apply to the requested `periodType`).
-- `affiliate-pro-invitee-detail` — **lifetime totals** (no `periodType` parameter), plus
-  `volMonth` for the current calendar month.
+- `okx-affiliate-performance-summary` — period-scoped (`periodType` chooses the window;
+  `total` is lifetime).
+- `okx-affiliate-invitee-list` — period-scoped per row (`depAmt`, `totalFee`,
+  `totalCommission`, `totalVol` apply to the requested `periodType`).
+- `okx-affiliate-invitee-detail` — **lifetime totals** (no `periodType` parameter), plus
+  `volMonth` for the current calendar-month volume.
+- `okx-affiliate-sub-affiliate-list` — **lifetime only** (new schema removed the period
+  filter for sub-affiliates).
 
 ### Q: Why are some fields decimal strings, not numbers?
 
@@ -112,9 +148,15 @@ digits; converting to a JSON number can lose precision in some clients. Always p
 
 ### Q: How fresh is the data?
 
-The `lastUpdatedTime` field on every response tells you when OKX last refreshed the
-underlying aggregates. Snapshots typically lag real-time by 30–60 minutes for high-fanout
-metrics like `traders` and `volume`. New invitees and deposits appear within a few minutes.
+The `uTime` field on every response tells you when OKX last refreshed the underlying
+aggregates. Snapshots typically lag real-time by 30–60 minutes for high-fanout metrics like
+`traderCnt` and `vol`. New invitees and deposits appear within a few minutes.
+
+### Q: Where did `hasDeposit` / `hasTrade` / `countryCode` filters go?
+
+Removed in the recent MCP overhaul. To find "deposited but never traded" cohorts, pull the
+invitee list and filter client-side (`depAmt > 0 && totalVol === 0`). For country filtering,
+filter the response by the `country` field.
 
 ---
 

@@ -124,7 +124,7 @@ Ask Claude Code:
 
 > *Show me my affiliate performance.*
 
-It should call `affiliate-pro-performance-summary` and return numbers. If it does, you are
+It should call `okx-affiliate-performance-summary` and return numbers. If it does, you are
 done.
 
 ## Troubleshooting
@@ -135,7 +135,7 @@ done.
 | Browser does not open                                            | Copy the URL Claude Code prints and open it manually                                    |
 | `Authentication failed` in terminal                              | Make sure your OKX account is an Affiliate; check you did not block third-party cookies |
 | 401 on tool calls hours later                                    | Token expired (≈ 1 h). Re-run `/mcp` once or just retry the tool call                   |
-| `400 Bad Request` from `affiliate-pro-performance-summary`       | Do not pass `pageType=2`. Drop the argument or set `pageType=1`                         |
+| `500 system error` from `okx-affiliate-invitee-list`             | The `limit` parameter was ≥ 99. Cap it at `"95"`                                       |
 
 For more, see [`docs/faq.md`](../faq.md).
 
