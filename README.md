@@ -12,15 +12,78 @@ manual API plumbing.
 > **Transport:** Streamable HTTP
 > **Auth:** OAuth 2.0 (per-user, hosted by OKX)
 
-## What you can do once it is connected
+## What it looks like
 
-Ask your agent things like:
-- *"Show me my affiliate performance for the last 30 days."*
-- *"Who are my top 10 invitees this quarter by commission?"*
-- *"List all my invite links sorted by trader count."*
-- *"How is sub-affiliate `XYZ` performing this month?"*
+After the one-time OAuth handshake, you talk to your affiliate operations through the
+agent in natural language. The agent picks the right tool, runs it, and answers like this:
 
-The agent picks the right tool, runs it, and answers in natural language.
+```
+You          ❯ 看下昨日节点数据
+
+Agent        ❯ 📊 Yesterday (2026-05-10)
+                 • Commission: $350.59 (Derivatives 98.5% / Spot 1.5%)
+                 • Volume:     $3.50M | Deposits: $8,022
+                 • Active traders: 77 | New invitees: 6
+
+                 vs 7-day avg ($503/day) → yesterday was -30%, within band.
+                 Today so far (1 h): $530 — pacing ahead.
+
+                 Top 3 by rebate:
+                  • UID …910040 (VIP 2)     $90.94 / $964K vol
+                  • UID …301554 (VIP 1)     $50.31 / $526K vol
+                  • UID …988366 (Regular)   $27.80 / $297K vol  ← qualifies for VIP1
+
+                 ⚠️ Bag-sitters needing rescue in 24h:
+                  • …033472 deposited $872, 0 trades
+                  • …446587 deposited $464, 0 trades (repeat — also did this 5/6)
+                  • …298402 deposited $420, 0 trades
+```
+
+```
+You          ❯ Who should I reach out to this week?
+
+Agent        ❯ 🎯 4 tiers, 33 total candidates:
+
+                 🔥 P0 — Star activators (joined ≤ 7d, already producing)
+                   …586237 (joined 4/29): $268 rebate, $2.0M vol, $5K deposit
+                   …084083 (joined 4/29): $228 rebate, $1.7M vol, $4.7K deposit
+                   → Fast-track to VIP1, give direct trading line. Today.
+
+                 🐋 P1 — Regular users doing whale volume → upgrade pitch this week
+                   …118301 $81 / $653K vol — joined 1/23
+                   …575159 $69 / $506K vol — joined 4/26
+                   …274299 $69 / $850K vol — joined 8/3
+                   …370516 $87 / $743K vol — joined 12/12 (longest tenure)
+
+                 ⚠️ P2 — Big bag-sitters (deposited 7d, didn't trade)
+                   …181120 deposited $10,000, only $500 traded (8d idle)
+                   …108384 deposited $7,293, $3K traded
+                   $36K total fresh deposits idle. Window closing fast.
+
+                 🆕 P3 — KYC verified, no deposit yet (13 users this week)
+```
+
+```
+You          ❯ Which whales are slipping away?
+
+Agent        ❯ ⚠️ Lifetime top 50 → only 23 still in last-30-day top 50.
+
+                 🔴 Type A — cashed out (hard to win back)
+                  • UID …893796 — $104K lifetime / withdrew 95% of $10.3M deposit
+                  • UID …580269 — $37K lifetime / withdrew 76% of $6.2M
+
+                 🟡 Type B — parked & idle (easiest win, capital still here)
+                  • UID …699614 — $26K lifetime / withdrew only 6% of $1.47M
+                    → DM today. Walk them through Flash Earn while they wait.
+
+                 🟠 Type C — gradual decay (intervene now)
+                  • UID …616246 — $18K lifetime / last 30d vol = 0
+                  • UID …690681 — $11.6K lifetime / last 30d vol = 0
+
+                 Combined LTV at risk: ~$208K (~46% of node's 12-month commission).
+```
+
+More scenarios → [Usage scenarios](#usage-scenarios) below.
 
 ## Quick start
 
