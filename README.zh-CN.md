@@ -39,6 +39,23 @@ Agent 自动选工具、执行、用人话回答。
 > 的 skill 安装：[`skills/openclaw-affiliate-mcp/`](skills/openclaw-affiliate-mcp/) —— 一个
 > 专门引导 agent 完成 OAuth 流程的 skill pack。
 
+## 使用场景
+
+预置的 skill 包，教 AI agent 用本 MCP 做常见分析任务。每个 skill 是一份带触发词的
+`SKILL.md`，包含 MCP 调用顺序、样例输出、推荐后续动作 —— 放到你 agent 的 skill 目录里，
+用户说出触发词时会自动激活。
+
+| 场景                                                                          | 用户怎么说                                                                  | 你拿到什么                                          |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------- |
+| [`daily-briefing`](examples/daily-briefing/SKILL.md)                          | *"看下昨日数据"* / *"morning report"* / *"节点日报"*                          | EOD 汇总 + 当日入金者 + 新邀请 + 3 条行动项          |
+| [`high-potential-invitees`](examples/high-potential-invitees/SKILL.md)        | *"潜力用户"* / *"who should I reach out to"*                                  | P0/P1/P2/P3 多层外联名单 + 具体 UID                   |
+| [`churn-rescue`](examples/churn-rescue/SKILL.md)                              | *"流失预警"* / *"鲸鱼跑了"*                                                   | 风险用户分 Type A（已跑路）/ B（资金还在）/ C（渐衰）|
+| [`whale-deep-dive`](examples/whale-deep-dive/SKILL.md)                        | *"拉一下 UID X 的完整资料"* / *"准备私聊话术"*                                 | 生涯 + 近期画像 + 健康信号 + 话术钩子                 |
+| [`acquisition-trends`](examples/acquisition-trends/SKILL.md)                  | *"近 6 个月拉新"* / *"DAT 历史"* / *"拉新趋势"*                                | 月度表 + 峰值标识 + 拐点分析                          |
+| [`tier-upgrade-candidates`](examples/tier-upgrade-candidates/SKILL.md)        | *"应该升 VIP1 的名单"* / *"升级 VIP 名单"*                                    | 做着鲸鱼量却还是 Regular 的用户，按预期提升排序        |
+
+完整索引和贡献指南见 [`examples/README.md`](examples/README.md)。
+
 ## 授权范围
 
 连接时 OKX 会问你授予哪些权限。**这个 MCP 只需要读权限**，所以推荐默认只勾选

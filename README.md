@@ -41,6 +41,24 @@ Pick the row that matches your client. Each guide is a single command plus a 4-s
 > [`skills/openclaw-affiliate-mcp/`](skills/openclaw-affiliate-mcp/) — a drop-in skill pack
 > that walks the agent through the OAuth flow.
 
+## Usage scenarios
+
+Pre-built skill packs that teach an AI agent how to use the MCP for common analysis tasks.
+Each one is a `SKILL.md` with trigger phrases, an MCP call sequence, sample output, and
+recommended follow-ups — drop it into your agent's skill directory and it activates
+automatically when the user's request matches the triggers.
+
+| Scenario                                                                      | What the user says                                                  | What you get back                                       |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------- |
+| [`daily-briefing`](examples/daily-briefing/SKILL.md)                          | *"Show me yesterday's data"* / *"morning report"* / *"节点日报"*       | EOD summary + same-day depositors + new invitees + 3 action items |
+| [`high-potential-invitees`](examples/high-potential-invitees/SKILL.md)        | *"Who should I reach out to?"* / *"潜力用户"*                          | P0/P1/P2/P3 outreach tiers with concrete UIDs           |
+| [`churn-rescue`](examples/churn-rescue/SKILL.md)                              | *"Which whales are slipping?"* / *"流失预警"*                          | At-risk users split into Type A (cashed out) / B (parked) / C (gradual) |
+| [`whale-deep-dive`](examples/whale-deep-dive/SKILL.md)                        | *"Pull everything on UID X"* / *"prep me to DM this user"*            | Lifetime + recent profile, health signals, outreach hook |
+| [`acquisition-trends`](examples/acquisition-trends/SKILL.md)                  | *"6-month acquisition trend"* / *"DAT history"* / *"拉新趋势"*         | Monthly table + peaks + inflection-point analysis        |
+| [`tier-upgrade-candidates`](examples/tier-upgrade-candidates/SKILL.md)        | *"Who should I push to VIP1?"* / *"升级 VIP 名单"*                     | Regular-tier users doing whale volume, sorted by uplift  |
+
+See [`examples/README.md`](examples/README.md) for the full index and contribution guide.
+
 ## Authorization scopes
 
 When you connect, OKX will ask which scopes to grant. **For this MCP only the read paths are
