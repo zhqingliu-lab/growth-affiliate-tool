@@ -77,6 +77,7 @@ Agent 自动选工具、执行、用人话回答。
 | [FAQ](docs/faq.md)                                             | Token 过期、400 错误、scope 不匹配、常见坑          |
 | [Agent 安装引导](INSTALL.md)                                   | 给 AI agent 端到端读的决策树                        |
 | [Skill 索引](skills/README.md)                                 | 给需要自定义 OAuth 处理的 runtime 用的 skill 列表    |
+| [**使用场景**](examples/README.md)                             | 常见分析任务的 skill 包（日报、流失救援、潜力用户等）|
 
 ## 前置条件
 

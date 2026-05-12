@@ -79,6 +79,7 @@ Full parameters and return fields → [`docs/tools-reference.md`](docs/tools-ref
 | [FAQ](docs/faq.md)                                             | Token expiry, 400 errors, scope mismatches, common pitfalls  |
 | [Agent install bootstrap](INSTALL.md)                          | Decision tree an AI agent can read end-to-end                |
 | [Skills index](skills/README.md)                               | Skills for runtimes that need custom OAuth handling          |
+| [**Usage scenarios**](examples/README.md)                      | Drop-in skill packs for common analysis tasks (daily briefing, churn rescue, etc.) |
 
 ## Prerequisites
 
