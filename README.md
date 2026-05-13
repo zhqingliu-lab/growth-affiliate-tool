@@ -8,6 +8,12 @@ A remote MCP (Model Context Protocol) endpoint that lets AI agents query the OKX
 portal — performance, invitees, links, sub-affiliates — through natural language, with no
 manual API plumbing.
 
+<p align="center">
+  <video src="https://github.com/zhqingliu-lab/growth-affiliate-tool/raw/main/docs/videos/affiliate-mcp-promo.mp4" controls poster="docs/videos/poster.jpg" width="720">
+    Your browser does not support inline video. <a href="docs/videos/affiliate-mcp-promo.mp4">Download the promo (3.5 MB, 60 s)</a>.
+  </video>
+</p>
+
 > **Endpoint:** `https://www.okx.com/api/v1/mcp/growth-affiliate-mcp`
 > **Transport:** Streamable HTTP
 > **Auth:** OAuth 2.0 (per-user, hosted by OKX)

@@ -7,6 +7,12 @@
 一个远端 MCP（Model Context Protocol）端点，让 AI agent 能用自然语言查询 OKX Affiliate 后台
 的业绩、邀请人、邀请链接、子联盟等数据，无需手动拼 API。
 
+<p align="center">
+  <video src="https://github.com/zhqingliu-lab/growth-affiliate-tool/raw/main/docs/videos/affiliate-mcp-promo.mp4" controls poster="docs/videos/poster.jpg" width="720">
+    浏览器不支持内嵌视频，<a href="docs/videos/affiliate-mcp-promo.mp4">点击下载（3.5 MB / 60 秒）</a>。
+  </video>
+</p>
+
 > **端点：** `https://www.okx.com/api/v1/mcp/growth-affiliate-mcp`
 > **传输：** Streamable HTTP
 > **认证：** OAuth 2.0（每个用户独立授权，由 OKX 托管）
