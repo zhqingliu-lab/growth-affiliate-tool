@@ -4,8 +4,8 @@
 
 [English](README.md) | [中文](README.zh-CN.md)
 
-一个远端 MCP（Model Context Protocol）端点，让 AI agent 能用自然语言查询 OKX Affiliate 后台
-的业绩、邀请人、邀请链接、子联盟等数据，无需手动拼 API。
+OKX 节点 MCP（Model Context Protocol），让 AI agent 能用自然语言查询 OKX 节点后台的
+返佣数据、邀请人、邀请链接、子节点等数据。
 
 <p align="center">
   <img src="docs/videos/affiliate-mcp-promo.gif" alt="60 秒宣传演示" width="720"/>
@@ -15,7 +15,7 @@
 > **传输：** Streamable HTTP
 > **认证：** OAuth 2.0（每个用户独立授权，由 OKX 托管）
 
-## 长这样
+## 使用示例
 
 用自然语言提问，agent 自动选工具、调 MCP、用人话回答（以下 UID 与数字仅示意）：
 
@@ -74,7 +74,7 @@ Agent ❯ ⚠️ 生涯前 50 用户里只有 23 个还在活跃。
 
 | Scope                 | 推荐 | 用途                                                  |
 | --------------------- | :--: | ----------------------------------------------------- |
-| `live:read`           | ✅   | 下面所有读取工具（业绩/邀请人/链接/子联盟）           |
+| `live:read`           | ✅   | 下面所有读取工具（业绩/邀请人/链接/子节点）           |
 | `live:trade`          | ❌   | 下单/改单/撤单 —— 本 MCP 不用                         |
 | `live:earn`           | ❌   | Earn 申购 —— 本 MCP 不用                              |
 | `live:asset_transfer` | ❌   | 资金划转 —— 本 MCP 不用                               |
@@ -90,8 +90,8 @@ Agent ❯ ⚠️ 生涯前 50 用户里只有 23 个还在活跃。
 | 2  | `okx-affiliate-invitee-list`          | 邀请人分页列表，含入金、交易、KYC                  |
 | 3  | `okx-affiliate-invitee-detail`        | 按 UID 查单个邀请人详情                            |
 | 4  | `okx-affiliate-link-list`             | 邀请链接 + 佣金比例 + 累计数据（含 24 小时佣金）   |
-| 5  | `okx-affiliate-sub-affiliate-list`    | MLRS 网络中的子联盟（生涯数据）                    |
-| 6  | `okx-affiliate-co-inviter-list`       | 你被列为共同邀请人的渠道                           |
+| 5  | `okx-affiliate-sub-affiliate-list`    | MLRS 网络中的子节点（生涯数据）                    |
+| 6  | `okx-affiliate-co-inviter-list`       | 助力人分析                                         |
 
 完整参数和返回字段 → [`docs/tools-reference.md`](docs/tools-reference.md)。
 
