@@ -9,9 +9,11 @@ portal — performance, invitees, links, sub-affiliates — through natural lang
 manual API plumbing.
 
 <p align="center">
-  <video src="https://github.com/zhqingliu-lab/growth-affiliate-tool/raw/main/docs/videos/affiliate-mcp-promo.mp4" controls poster="docs/videos/poster.jpg" width="720">
-    Your browser does not support inline video. <a href="docs/videos/affiliate-mcp-promo.mp4">Download the promo (3.5 MB, 60 s)</a>.
-  </video>
+  <a href="https://github.com/zhqingliu-lab/growth-affiliate-tool/raw/main/docs/videos/affiliate-mcp-promo.mp4">
+    <img src="docs/videos/poster.jpg" alt="Watch the 60-second promo video" width="720"/>
+  </a>
+  <br/>
+  <sub>▶️ <a href="https://github.com/zhqingliu-lab/growth-affiliate-tool/raw/main/docs/videos/affiliate-mcp-promo.mp4">Watch the 60-second promo</a> · 1080p · 3.5 MB</sub>
 </p>
 
 > **Endpoint:** `https://www.okx.com/api/v1/mcp/growth-affiliate-mcp`

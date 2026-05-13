@@ -8,9 +8,11 @@
 的业绩、邀请人、邀请链接、子联盟等数据，无需手动拼 API。
 
 <p align="center">
-  <video src="https://github.com/zhqingliu-lab/growth-affiliate-tool/raw/main/docs/videos/affiliate-mcp-promo.mp4" controls poster="docs/videos/poster.jpg" width="720">
-    浏览器不支持内嵌视频，<a href="docs/videos/affiliate-mcp-promo.mp4">点击下载（3.5 MB / 60 秒）</a>。
-  </video>
+  <a href="https://github.com/zhqingliu-lab/growth-affiliate-tool/raw/main/docs/videos/affiliate-mcp-promo.mp4">
+    <img src="docs/videos/poster.jpg" alt="点击观看 60 秒宣传视频" width="720"/>
+  </a>
+  <br/>
+  <sub>▶️ <a href="https://github.com/zhqingliu-lab/growth-affiliate-tool/raw/main/docs/videos/affiliate-mcp-promo.mp4">观看 60 秒宣传视频</a> · 1080p · 3.5 MB</sub>
 </p>
 
 > **端点：** `https://www.okx.com/api/v1/mcp/growth-affiliate-mcp`
